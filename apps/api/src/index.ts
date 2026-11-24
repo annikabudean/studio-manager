@@ -1,8 +1,14 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import auth from './routes/auth.js';
+import { cors } from "hono/cors";
 
 const app = new Hono();
+
+app.use('*', cors({
+  origin: process.env.WEB_ORIGIN,
+  credentials: true,
+}));
 
 app.get("/health", (c) => {
   return c.json({ status: "ok" });
